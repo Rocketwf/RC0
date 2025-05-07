@@ -13,7 +13,7 @@
 
 class Lexer {
     public:
-    Lexer forString(std::string source);
+    static Lexer forString(std::string source);
     std::optional<Token> nextToken();
 
     private:

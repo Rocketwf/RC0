@@ -3,6 +3,12 @@
 #include "number_literal.h"
 
 #include <optional>
+#include <ranges>
+#include <utility>
+
+Lexer Lexer::forString(std::string source) { 
+    return Lexer(source); 
+}
 
 std::optional<ErrorToken> Lexer::skip_whitespace() {
     enum CommentType {
@@ -92,10 +98,10 @@ std::unique_ptr<Token> Lexer::lex_identifier_or_keyword() {
     std::string id = m_source.substr(m_pos, m_pos + off);
     for (const auto& it: Keyword::keywords) {
         if (it.second == id) {
-            return std::make_unique<Token>(Keyword(it.first, build_span(off)));
+            return std::make_unique<Keyword>(Keyword(it.first, build_span(off)));
         }
     }
-    return std::make_unique<Token>(Identifier(id, build_span(off)));
+    return std::make_unique<Identifier>(Identifier(id, build_span(off)));
 }
 
 std::unique_ptr<Token> Lexer::lex_number() {
@@ -105,9 +111,9 @@ std::unique_ptr<Token> Lexer::lex_number() {
             off++;
         }
         if (off == 2) {
-            return std::make_unique<Token>(ErrorToken(m_source.substr(m_pos, m_pos + off), build_span(2)));
+            return std::make_unique<ErrorToken>(ErrorToken(m_source.substr(m_pos, m_pos + off), build_span(2)));
         }
-        return std::make_unique<Token>(Number_literal(m_source.substr(m_pos, m_pos + off), 16, build_span(off)));
+        return std::make_unique<Number_literal>(Number_literal(m_source.substr(m_pos, m_pos + off), 16, build_span(off)));
     }
     int off = 1;
     while (has_more(off) && is_numeric(peek(off))) {
@@ -115,9 +121,9 @@ std::unique_ptr<Token> Lexer::lex_number() {
     }
     if (peek() == '0' && off > 1) {
         //no leading zeroes
-        return std::make_unique<Token>(ErrorToken(m_source.substr(m_pos, m_pos + off), build_span(off)));
+        return std::make_unique<ErrorToken>(ErrorToken(m_source.substr(m_pos, m_pos + off), build_span(off)));
     }
-    return std::make_unique<Token>(Number_literal(m_source.substr(m_pos, m_pos + off), 10, build_span(off)));
+    return std::make_unique<Number_literal>(Number_literal(m_source.substr(m_pos, m_pos + off), 10, build_span(off)));
 }
 
 bool Lexer::is_hex_prefix() { 
@@ -142,9 +148,9 @@ bool Lexer::is_hex(char c) {
 std::unique_ptr<Token> Lexer::single_or_assign_operator(
     Operator::Operator_type single, Operator::Operator_type assign) {
   if (has_more(1) && peek(1) == '=') {
-    return std::make_unique<Token>(Operator(assign, build_span(2)));
+    return std::make_unique<Operator>(Operator(assign, build_span(2)));
   }
-  return std::make_unique<Token>(Operator(single, build_span(2)));
+  return std::make_unique<Operator>(Operator(single, build_span(2)));
 }
 
 Span Lexer::build_span(int proceed) { 
