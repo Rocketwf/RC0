@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "span.h"
+#include "../span.h"
 #include "token.h"
 
 class Number_literal : public Token {

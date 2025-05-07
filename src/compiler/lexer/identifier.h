@@ -3,7 +3,7 @@
 #include <string>
 
 #include "token.h"
-#include "span.h"
+#include "../span.h"
 
 class Identifier: public Token {
     public:
