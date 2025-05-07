@@ -20,5 +20,7 @@ $(OBJ_DIR)/%.o : $(SOURCE_DIR)/%.cpp
 run: $(TARGET)
 	./main
 
+rebuild: clean all
+
 clean:
 	rm -rf $(BUILD_DIR)
