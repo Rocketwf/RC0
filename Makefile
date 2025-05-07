@@ -4,9 +4,9 @@ TARGET = main
 SOURCE_DIR = src
 BUILD_DIR = build
 OBJ_DIR = $(BUILD_DIR)/obj
-SOURCES = $(wildcard $(SOURCE_DIR)/*.cpp)
+SOURCES = $(shell find $(SOURCE_DIR) -name '*.cpp')
 OBJECTS = $(patsubst $(SOURCE_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
-CXXFLAGS = -Wall -std=c++17 # Compiler flags
+CXXFLAGS = -Wall -std=c++23 # Compiler flags
 
 all: $(TARGET)
 
