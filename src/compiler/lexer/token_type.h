@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Token_type {
+enum class TokenType {
     ERROR,
     IDENTIFIER,
     KEYWORD,

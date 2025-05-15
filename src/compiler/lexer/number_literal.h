@@ -4,15 +4,18 @@
 
 #include "../span.h"
 #include "token.h"
-
-class Number_literal : public Token {
+#include <iostream>
+class NumberLiteral : public Token {
     public:
-        Number_literal(std::string value, int base, Span span) : 
-        m_value(value), m_base(base),  m_span(span) {}
+        NumberLiteral(std::string value, int base, Span span) : 
+        Token(span), m_value(value), m_base(base) {}
 
-        std::string asString() override { return m_value; }
+        std::string as_string() const override {
+          return m_value;
+        }
+        int base() const { return m_base; }
+        TokenType token_type() override { return TokenType::NUMBER; }
     private:
         std::string m_value;
         int m_base;
-        Span m_span;
 };

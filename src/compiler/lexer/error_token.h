@@ -8,11 +8,12 @@
 class ErrorToken: public Token { //TODO: Fix name
     public:
     ErrorToken(std::string value, Span span):
-        m_value(value),
-        m_span(span) {}
+        Token(span),    
+        m_value(value) {}
 
-    std::string asString() override {return m_value;}
+    std::string as_string() const override {return m_value;}
+    TokenType token_type() override {return TokenType::ERROR;};
+
     private:
     std::string m_value;
-    Span m_span;
 };

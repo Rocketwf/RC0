@@ -5,29 +5,28 @@
 
 #include "token.h"
 #include "../span.h"
+#include "separator_type.h"
 
 class Separator: public Token {
     public:
-        enum class Separator_type {
-        PAR_OPEN,
-        PAR_CLOSE,
-        BRACE_OPEN,
-        BRACE_CLOSE,
-        SEMICOLON
-    };
-    Separator(Separator_type type, Span span):
-        m_type(type),
-        m_span(span) {}
-    std::unordered_map<Separator_type, std::string> separators = {
-        {Separator_type::PAR_OPEN, "("},
-        {Separator_type::PAR_CLOSE, ")"},
-        {Separator_type::BRACE_OPEN, "{"},
-        {Separator_type::BRACE_CLOSE, "}"}
-    };
-    std::string asString() override {
-            return separators[m_type];
+    bool is_separator(SeparatorType separator_type) const override {
+        return get_type() == separator_type;
     }
+
+    Separator(SeparatorType type, Span span):
+        Token(span),
+        m_type(type) {}
+    const std::unordered_map<SeparatorType, std::string> separators = {
+        {SeparatorType::PAR_OPEN, "("},
+        {SeparatorType::PAR_CLOSE, ")"},
+        {SeparatorType::BRACE_OPEN, "{"},
+        {SeparatorType::BRACE_CLOSE, "}"},
+        {SeparatorType::SEMICOLON, ";"}};
+    std::string as_string() const override {
+            return separators.at(m_type);
+    }
+    SeparatorType get_type() const { return m_type; }
+    TokenType token_type() override { return TokenType::SEPARATOR; }
     private: 
-    Separator_type m_type;
-    Span m_span;
+    SeparatorType m_type;
 };

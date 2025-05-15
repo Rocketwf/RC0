@@ -13,20 +13,20 @@
 
 class Lexer {
     public:
-    static Lexer forString(std::string source);
-    std::optional<Token> nextToken();
+    static Lexer for_string(std::string source);
+    std::optional<std::unique_ptr<Token>> next_token();
 
     private:
     const std::string m_source;
-    int m_pos;
-    int m_linestart;
-    int m_line;
+    int m_pos = 0;
+    int m_linestart = 0;
+    int m_line = 0;
 
     Lexer(const std::string& source):
         m_source(source) {};
 
     std::optional<ErrorToken> skip_whitespace();
-    Separator separator(Separator::Separator_type par_open);
+    std::unique_ptr<Token> separator(SeparatorType par_open);
     std::unique_ptr<Token> lex_identifier_or_keyword();
     std::unique_ptr<Token> lex_number();
     bool is_hex_prefix();
@@ -34,7 +34,7 @@ class Lexer {
     bool is_numeric(char c);
     bool is_hex(char c);
     std::unique_ptr<Token> single_or_assign_operator(
-        Operator::Operator_type single, Operator::Operator_type assign);
+        OperatorType single, OperatorType assign);
     Span build_span(int proceed);
     char peek();
     char peek(int offset);
