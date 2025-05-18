@@ -1,14 +1,37 @@
 #pragma once
 
+class Position {
+    public:
+    Position(int line, int column):
+        m_line(line),
+        m_column(column) {};
+
+    int line() const {
+        return m_line;
+    }
+    int column() const {
+        return m_column;
+    }
+    private:
+    const int m_line;
+    const int m_column;
+};
+
 class Span {
     public:
-    const int _start_line;
-    const int _start_col;
-    const int _end_line;
-    const int _end_col;
-    Span(int start_line, int start_col, int end_line, int end_col): //TODO: Replace with position structs
-        _start_line(start_line),
-        _start_col(start_col),
-        _end_line(end_line),
-        _end_col(end_col) {}
+    const Position _start;
+    const Position _end;
+    Span(const Position start, const Position end):
+        _start(start),
+        _end(end) {};
+    Position start() const {
+        return _start;
+    }
+    Position end() const {
+        return _end;
+    }
+
+    Span merge(Span later) const {
+        return Span(_start, later._end);
+    }
 };
