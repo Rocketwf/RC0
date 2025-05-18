@@ -2,6 +2,7 @@
 
 #include <memory>
 
+class Context;
 class Tree;
 class AssignmentTree;
 class BinaryOperationTree;
