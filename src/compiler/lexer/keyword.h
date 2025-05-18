@@ -11,7 +11,7 @@ class Keyword: public Token {
     public:
 
         bool is_keyword(KeywordType keyword_type) const override {
-            return false;
+            return get_type() == keyword_type;
         }
 
         Keyword(KeywordType type, Span span):
