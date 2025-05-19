@@ -37,6 +37,7 @@ std::optional<long> LiteralTree::parse_value() {
   int end = _value.length();
   switch(_base) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     case 10: return parse_dec(end); break;
     case 16: return parse_hex(end); break;
     default:
@@ -49,6 +50,13 @@ std::optional<long> LiteralTree::parse_value() {
       throw ParseException("unexpected base " + _base);
   }  
 >>>>>>> b5aa999 (bug)
+=======
+    case 10: return parse_dec(end); break;
+    case 16: return parse_hex(end); break;
+    default:
+      throw ParseException("unexpected base " + std::to_string(_base));
+  }
+>>>>>>> dedd175 (fix missing return)
 }
 
 std::optional<long> LiteralTree::parse_dec(int end) const {
