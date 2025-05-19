@@ -34,13 +34,13 @@ void NegateTree::accept(Visitor& visitor, Context& context) {
 
 
 std::optional<long> LiteralTree::parse_value() { 
-  int end = m_value.length();
-  switch(m_base) {
-    case 10: parse_dec(end); break;
-    case 16: parse_hex(end); break;
+  int end = _value.length();
+  switch(_base) {
+    case 10: return parse_dec(end); break;
+    case 16: return parse_hex(end); break;
     default:
-      throw ParseException("unexpected base " + m_base);
-  }  
+      throw ParseException("unexpected base " + std::to_string(_base));
+  }
 }
 
 std::optional<long> LiteralTree::parse_dec(int end) const {
@@ -57,8 +57,8 @@ std::optional<long> LiteralTree::parse_dec(int end) const {
       return std::nullopt;
   } catch (const std::out_of_range& e) {
       return std::nullopt;
-}
-
+  }
+  return std::nullopt;
 }
 
 std::optional<long> LiteralTree::parse_hex(int end) const {
@@ -71,4 +71,5 @@ std::optional<long> LiteralTree::parse_hex(int end) const {
   } catch (const std::out_of_range& e) {
       return std::nullopt;
   }
+  return std::nullopt;
 }

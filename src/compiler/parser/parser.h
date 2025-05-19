@@ -184,9 +184,9 @@ class Parser {
             name(dynamic_cast<Identifier&>(ident_token)));
       }
       case TokenType::NUMBER: {
-        auto lit = dynamic_cast<NumberLiteral*>(&m_token_source.consume());
-        return std::make_unique<LiteralTree>(lit->as_string(), lit->base(),
-                                             lit->span());
+        auto lit = dynamic_cast<NumberLiteral&>(m_token_source.consume());
+        return std::make_unique<LiteralTree>(lit.as_string(), lit.base(),
+                                             lit.span());
       }
       default:
         throw ParseException(
