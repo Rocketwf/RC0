@@ -9,8 +9,7 @@ std::unique_ptr<ProgramTree> SemanticAnalysis::analyze() {
     IntegerLiteralRangeAnalysis IRA;
     auto visitor = RecursivePostOrderVisitor(IRA);
     Context context;
-    m_program->accept(visitor, context); //
-    std::cout << "a" << std::endl;
+    m_program->accept(visitor, context);
 
     return std::move(m_program);
 }

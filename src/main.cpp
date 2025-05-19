@@ -7,7 +7,7 @@
 #include <iostream>
 
 int main() {
-    auto lexer = Lexer::for_string("int main(){int a = 5; int b = a + 2; return b;}");
+    auto lexer = Lexer::for_string("int main(){int a = 2; int b = a + 5; return b;}");
     TokenSource source(lexer);
     Parser parser(source);
     auto program = parser.parse_program();
